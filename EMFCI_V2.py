@@ -73,21 +73,39 @@ INSIRA O NOME DO POLIGONO A LER
 
 
 class Shape:
-    def __init__(self):
-        self.geometria = {}
-        self.cabeçalho = {}
-        self.leitor_shapefile(caminho = 'C:\Program Files\Taxa fácil', nome_arquivo = 'Aguaclara_20221', geometria = self.geometria, cabeçalho = self.cabeçalho) #posição ou nome
+    def __init__(self, local = 'lista', modo = 'index'):
+
+
+        self.leitor_shapefile(modo, caminho = 'C:\Program Files\Taxa fácil', nome_arquivo = 'Aguaclara_20221') #posição ou nome
         self.lista_tudo
 
-    def leitor_shapefile(self, caminho, nome_arquivo, geometria, cabeçalho):
+    def cria_método(self):
+        #OS MÉTODOS DE LEITURA E IMPRESSÃO DEFINEM QUAL ATRIBUTO DOS ATRIBUTOS ELE DEVE LER E SE ELE DEVE ASSOCIAR AO POLÍGONO
+        #O INDEX DO POLÍGONO OU UM CÓDIGO PRESENTE NA ATTRIBUTES TABLE
+
+        pass
+
+    def leitor_shapefile(self, modo, caminho, nome_arquivo):
         global sf
         sf = shapefile.Reader(fr'{caminho}\{nome_arquivo}')
         self.cabeçalhos = sf.fields
         contador = 0
-        while contador < len(sf):
-            geometria[sf.record(contador)['CODE']] = sf.shape(contador).points
-            cabeçalho[sf.shape(contador).oid] = sf.record(contador)
-            contador += 1
+
+        def shape_num_gleba():
+            self.geometria = {}
+            self.cabeçalho = {}
+
+            while contador < len(sf):
+                geometria[sf.record(contador)['CODE']] = sf.shape(contador).points
+                cabeçalho[sf.shape(contador).oid] = sf.record(contador)
+                contador += 1
+
+        def leitor_shapefile_alternativo(self, caminho, nome_arquivo, geometria, cabeçalho):
+            while contador < len(sf):
+                geometria[sf.record(contador).oid] = sf.shape(contador).points
+                cabeçalho[sf.shape(contador).oid] = sf.record(contador)
+                contador += 1
+                
 
     def lista_tudo(self):
         e = 0

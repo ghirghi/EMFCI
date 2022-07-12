@@ -3,7 +3,7 @@ from EMFCI_V2 import Shape
 
 #QUAL O CONTEXTO???
 
-Taxa = Shape()
+Taxa = Shape('lista', 'index')
 
 #print(Taxa.geometria.points)
 
