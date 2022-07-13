@@ -71,40 +71,47 @@ class Ponto:
 INSIRA O NOME DO POLIGONO A LER
 """
 
+#ONDE EU PAREI
+#A ABA TESTE VAI SELECIONAR  A FORMA QUE VAMOS CHAVEAR OS VALORES ATRIBUTOS E GEOMETRIAS NO DICIONÁRIO, ATRAVÉS DE UMA NOVA FUNÇÃO QUE REDIRECIONA OU PARA
+#A ESCOLHA DE UM ATTRIBUTE "CODE", OU PELO INDEX "OID". DEVO ADICIONAR UMA FORMA DA ABA TESTE VER QUAIS OS ATRIBUTOS PARA ESCOLHER DE UM DELES.
 
 class Shape:
-    def __init__(self, local = 'lista', modo = 'index'):
-
-
-        self.leitor_shapefile(modo, caminho = 'C:\Program Files\Taxa fácil', nome_arquivo = 'Aguaclara_20221') #posição ou nome
+    def __init__(self, modo = 'index'):
+        self.geometria = {}
+        self.cabeçalho = {}
+        self.modo = modo
+        self.leitor_shapefile(self.modo, caminho = 'C:\Program Files\Taxa fácil', nome_arquivo = 'Aguaclara_20221') #posição ou nome
+        self.seleciona_método(self.modo, geometria = self.geometria, cabeçalho = self.cabeçalho)
         self.lista_tudo
 
-    def cria_método(self):
+    def seleciona_método(self, geometria, cabeçalho):
         #OS MÉTODOS DE LEITURA E IMPRESSÃO DEFINEM QUAL ATRIBUTO DOS ATRIBUTOS ELE DEVE LER E SE ELE DEVE ASSOCIAR AO POLÍGONO
         #O INDEX DO POLÍGONO OU UM CÓDIGO PRESENTE NA ATTRIBUTES TABLE
 
-        pass
+        while contador < len(sf):
+            geometria[sf.record(contador)['CODE']] = sf.shape(contador).points
+            cabeçalho[sf.shape(contador)['CODE']] = sf.record(contador)
+            contador += 1
 
-    def leitor_shapefile(self, modo, caminho, nome_arquivo):
+        while contador < len(sf):
+            geometria[sf.record(contador).oid] = sf.shape(contador).points
+            cabeçalho[sf.shape(contador).oid] = sf.record(contador)
+            contador += 1    
+
+    def leitor_shapefile(self, modo, caminho, nome_arquivo, geometria, cabeçalho):
         global sf
         sf = shapefile.Reader(fr'{caminho}\{nome_arquivo}')
         self.cabeçalhos = sf.fields
         contador = 0
 
-        def shape_num_gleba():
-            self.geometria = {}
-            self.cabeçalho = {}
+        if self.modo == 'index':
+            pass
+        elif self.modo == '1':
+            pass
 
-            while contador < len(sf):
-                geometria[sf.record(contador)['CODE']] = sf.shape(contador).points
-                cabeçalho[sf.shape(contador).oid] = sf.record(contador)
-                contador += 1
+        
 
-        def leitor_shapefile_alternativo(self, caminho, nome_arquivo, geometria, cabeçalho):
-            while contador < len(sf):
-                geometria[sf.record(contador).oid] = sf.shape(contador).points
-                cabeçalho[sf.shape(contador).oid] = sf.record(contador)
-                contador += 1
+        
                 
 
     def lista_tudo(self):
